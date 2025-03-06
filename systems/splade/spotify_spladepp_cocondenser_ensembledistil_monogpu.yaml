@@ -1,0 +1,46 @@
+# @package _global_
+
+# FILES
+defaults: # (these specify which config FILES to use)
+  ############## TRAIN ###################################
+  - train/config: splade_monogpu
+  - train/data: distil_from_ensemble
+  - train/model: splade_cocondenser
+  ############## INDEX ###################################
+  - index: msmarco
+  ############## RETRIEVE ################################
+  - retrieve_evaluate: all
+  ############### FLOPS ##################################
+  - flops: msmarco
+
+
+# Direct PARAMETER setting
+config:
+  splade_model: "splade-v3"
+  loss: DistilMarginMSE
+  regularizer:
+    FLOPS:
+      lambda_q: 0.5
+      lambda_d: 0.4
+      T: 50000
+      targeted_rep: rep
+      reg: FLOPS
+  checkpoint_dir: models/cocondenser_ensemble_distil_monogpu/checkpoint
+  index_dir: models/cocondenser_ensemble_distil_monogpu/index
+  out_dir: models/cocondenser_ensemble_distil_monogpu/out
+  max_length: 500
+  pretrained_no_yamlconfig: true
+#   index_dir: /storage/users/watheq/projects/podcast_resource/data/indexes/spotify/splade-cocondenser-ensembledistil
+
+data:
+  COLLECTION_PATH: /storage/users/watheq/projects/podcast_resource/data/splade_corpus/spotify_120_60_time_segment.tsv
+  Q_COLLECTION_PATH: ['/storage/users/watheq/projects/podcast_resource/data/queries/podcasts_2020_topics_test.tsv', '/storage/users/watheq/projects/podcast_resource/data/queries/podcasts_2021_topics_test.tsv']
+  EVAL_QREL_PATH': ['/storage/users/watheq/projects/podcast_resource/data/queries/podcasts_2020_qrels.tsv', '/storage/users/watheq/projects/podcast_resource/data/queries/podcasts_2021_qrels.tsv']
+
+
+
+# init_dict:
+#   model_type_or_dir: naver/splade-cocondenser-ensembledistil
+  # device: 1
+  # id_style: row_id
+
