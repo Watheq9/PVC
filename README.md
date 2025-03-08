@@ -21,3 +21,6 @@ conda install -c conda-forge openjdk=21 maven -y
 
 
 2. To build the pool, refer to the systems dir
+
+
+3. To judge the built pool, refer to LLM dir
